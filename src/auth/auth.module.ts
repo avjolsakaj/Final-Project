@@ -2,6 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+//third-party modules
+import { AngularFireModule, FirebaseAppConfig } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
+//shared module
+import { SharedModule } from './shared/shared.module';
+
+// Initialize Firebase
+import { environment } from 'src/environments/environment';
+
 //Routes
 export const ROUTES: Routes = [
   {
@@ -21,7 +32,14 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(ROUTES)],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(ROUTES),
+    AngularFireModule.initializeApp(environment.firebaseAppConfig),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    SharedModule.forRoot()
+  ],
   declarations: [],
   providers: []
 })
