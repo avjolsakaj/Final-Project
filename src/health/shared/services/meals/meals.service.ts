@@ -43,7 +43,6 @@ export class MealsService {
   }
 
   getMeal(key: string) {
-    console.log('getMeal', key);
     if (!key) {
       return of({});
     }
