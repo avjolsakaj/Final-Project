@@ -28,11 +28,12 @@ export class MealComponent implements OnInit, OnDestroy {
       switchMap(param => this.mealsService.getMeal(param.id))
     );
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  public async addMeal(event: Meal) {
+  async addMeal(event: Meal) {
     await this.mealsService.addMeal(event);
     this.backToMeals();
   }
@@ -42,13 +43,14 @@ export class MealComponent implements OnInit, OnDestroy {
     await this.mealsService.updateMeal(key, event);
     this.backToMeals();
   }
+
   async removeMeal(event: Meal) {
     const key = this.route.snapshot.params.id;
     await this.mealsService.removeMeal(key);
     this.backToMeals();
   }
 
-  public backToMeals() {
+  backToMeals() {
     this.router.navigate(['meals']);
   }
 }

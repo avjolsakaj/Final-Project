@@ -22,7 +22,7 @@ export class ListItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public getRoute(item: any) {
+  getRoute(item: any) {
     console.log('getRoute', item.$key);
     return [`../meals`, item.$key];
   }

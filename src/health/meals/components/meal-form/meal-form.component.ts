@@ -56,13 +56,13 @@ export class MealFormComponent implements OnChanges {
     }
   }
 
-  public emptyIngredients() {
+  emptyIngredients() {
     while (this.ingredients.controls.length) {
       this.ingredients.removeAt(0);
     }
   }
 
-  public createMeal() {
+  createMeal() {
     if (this.form.valid) {
       this.create.emit(this.form.value);
     }
@@ -89,15 +89,15 @@ export class MealFormComponent implements OnChanges {
     );
   }
 
-  public removeIngredient(index: number) {
+  removeIngredient(index: number) {
     this.ingredients.removeAt(index);
   }
 
-  public addIngredient() {
+  addIngredient() {
     this.ingredients.push(new FormControl(''));
   }
 
-  public toggle() {
+  toggle() {
     this.toggled = !this.toggled;
   }
 }

@@ -30,19 +30,19 @@ export class MealsService {
     return this.authService.user.uid;
   }
 
-  public addMeal(meal: Meal) {
+  addMeal(meal: Meal) {
     return this.db.list(`meals/${this.uid}`).push(meal);
   }
 
-  public updateMeal(key: string, meal: Meal) {
+  updateMeal(key: string, meal: Meal) {
     return this.db.object(`meals/${this.uid}/${key}`).update(meal);
   }
 
-  public removeMeal(key: string) {
+  removeMeal(key: string) {
     return this.db.list(`meals/${this.uid}`).remove(key);
   }
 
-  public getMeal(key: string) {
+  getMeal(key: string) {
     console.log('getMeal', key);
     if (!key) {
       return of({});
