@@ -12,7 +12,7 @@ export interface User {
 @Injectable()
 export class AuthService {
   auth$ = this.af.authState.pipe(
-    tap((next: firebase.User) => {
+    tap(next => {
       if (!next) {
         this.store.set('user', null);
         return;
@@ -31,22 +31,22 @@ export class AuthService {
   constructor(private af: AngularFireAuth, private store: Store) {}
 
   get authState() {
-    return this.af.authState.pipe();
+    return this.af.authState;
   }
 
-  public createUser(email: string, password: string) {
+  createUser(email: string, password: string) {
     return this.af.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  public loginUser(email: string, password: string) {
+  loginUser(email: string, password: string) {
     return this.af.auth.signInWithEmailAndPassword(email, password);
   }
 
-  public logOutUser() {
+  logoutUser() {
     return this.af.auth.signOut();
   }
 
-  public get user() {
+  get user() {
     return this.af.auth.currentUser;
   }
 }

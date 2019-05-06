@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     return this.authService.authState.pipe(
-      map((user: firebase.User) => {
+      map(user => {
         if (!user) {
           this.router.navigate(['/auth/login']);
         }

@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public async registerUser(event: FormGroup) {
+  async registerUser(event: FormGroup) {
     const { email, password } = event.value;
     try {
       await this.authService.createUser(email, password);

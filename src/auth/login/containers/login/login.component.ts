@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AuthService } from 'src/auth/shared/services/auth/auth.service';
+import { AuthService } from '../../../shared/services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public async loginUser(event: FormGroup) {
+  async loginUser(event: FormGroup) {
     const { email, password } = event.value;
 
     try {
