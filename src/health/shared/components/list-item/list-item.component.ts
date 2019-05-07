@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
+import { Meal } from '../../services/meals/meals.service';
 
 @Component({
   selector: 'list-item',
@@ -14,16 +15,15 @@ import {
   styleUrls: ['./list-item.component.scss']
 })
 export class ListItemComponent implements OnInit {
-  @Output() remove = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<Meal>();
   toggled = false;
-  @Input() item: any;
+  @Input() item: Meal;
 
   constructor() {}
 
   ngOnInit(): void {}
 
   getRoute(item: any) {
-    console.log('getRoute', item.$key);
     return [`../meals`, item.$key];
   }
 

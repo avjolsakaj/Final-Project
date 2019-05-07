@@ -17,8 +17,18 @@ export interface Meal {
 export class MealsService {
   meals$: Observable<Meal[]> = this.db
     .list(`meals/${this.uid}`)
-    .valueChanges()
-    .pipe(tap((next: Meal[]) => this.store.set('meals', next)));
+    .snapshotChanges()
+    .pipe(
+      map(actions =>
+        actions.map(action => {
+          const data = action.payload.val() as Meal;
+          const $key = action.payload.key;
+          const result = { $key, ...data };
+          return result;
+        })
+      ),
+      tap((next: Meal[]) => this.store.set('meals', next))
+    );
 
   constructor(
     private store: Store,
