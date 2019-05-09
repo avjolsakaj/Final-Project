@@ -1,12 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from 'store';
+import { Observable, Subscription } from 'rxjs';
+
+import {
+  Workout,
+  WorkoutsService
+} from '../../../shared/services/workouts/workouts.service';
 
 @Component({
   selector: 'workouts',
   templateUrl: './workouts.component.html',
   styleUrls: ['./workouts.component.scss']
 })
-export class WorkoutsComponent implements OnInit {
-  constructor() {}
+export class WorkoutsComponent implements OnInit, OnDestroy {
+  workouts$: Observable<Workout[]>;
+  subscription: Subscription;
 
-  ngOnInit(): void {}
+  constructor(private store: Store, private workoutsService: WorkoutsService) {}
+
+  ngOnInit() {
+    this.workouts$ = this.store.select<Workout[]>('workouts');
+    this.subscription = this.workoutsService.workouts$.subscribe();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  removeWorkout(event: Workout) {
+    this.workoutsService.removeWorkout(event.$key);
+  }
 }

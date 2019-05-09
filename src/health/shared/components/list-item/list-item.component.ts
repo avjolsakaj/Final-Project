@@ -1,12 +1,10 @@
 import {
   Component,
-  OnInit,
   Input,
   ChangeDetectionStrategy,
   Output,
   EventEmitter
 } from '@angular/core';
-import { Meal } from '../../services/meals/meals.service';
 
 @Component({
   selector: 'list-item',
@@ -14,17 +12,15 @@ import { Meal } from '../../services/meals/meals.service';
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.scss']
 })
-export class ListItemComponent implements OnInit {
-  @Output() remove = new EventEmitter<Meal>();
+export class ListItemComponent {
+  @Output() remove = new EventEmitter<any>();
   toggled = false;
-  @Input() item: Meal;
+  @Input() item: any;
 
   constructor() {}
 
-  ngOnInit(): void {}
-
   getRoute(item: any) {
-    return [`../meals`, item.$key];
+    return [`../${item.ingredients ? 'meals' : 'workouts'}`, item.$key];
   }
 
   toggle() {

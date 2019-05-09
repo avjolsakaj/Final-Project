@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 //Guards
@@ -28,11 +27,7 @@ export const ROUTES: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(ROUTES),
-    SharedModule.forRoot()
-  ],
+  imports: [RouterModule.forChild(ROUTES), SharedModule.forRoot()],
   exports: [],
   providers: []
 })
