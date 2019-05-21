@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class JoinPipe implements PipeTransform {
   transform(value: any) {
-    return Array.isArray(value) ? value.join(', ') : value
+    return Array.isArray(value) ? value.join(', ') : value;
   }
 }
