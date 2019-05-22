@@ -36,6 +36,7 @@ export class ScheduleService {
     withLatestFrom(this.section$),
     map(([items, section]: any[]) => {
       const id = section.data.$key;
+      delete section.data.$key;
 
       const defaults: ScheduleItem = {
         workouts: null,
@@ -85,20 +86,15 @@ export class ScheduleService {
       return { startAt, endAt };
     }),
     switchMap(({ startAt, endAt }: any) => {
-      return of(this.getSchedule(startAt, endAt));
+      return this.getSchedule(startAt, endAt);
     }),
     map((data: any) => {
       const mapped: ScheduleList = {};
-
-      for (const prop of data) {
-        if (!mapped[prop.section]) {
-          mapped[prop.section] = prop;
-        }
-      }
-
+      for (const prop of data)
+        if (!mapped[prop.section]) mapped[prop.section] = prop;
       return mapped;
     }),
-    tap((next: any) => this.store.set('schedule', next))
+    tap((next: ScheduleItem[]) => this.store.set('schedule', next))
   );
 
   constructor(
@@ -132,21 +128,23 @@ export class ScheduleService {
   }
 
   private getSchedule(startAt: number, endAt: number) {
-    return this.db.list(
-      `schedule/${this.uid}`,
-      ref => {
+    return this.db
+      .list(`schedule/${this.uid}`, ref => {
         return ref
           .orderByChild('timestamp')
           .startAt(startAt)
           .endAt(endAt);
-      }
-      // {
-      //   query: {
-      //     orderByChild: 'timestamp',
-      //     startAt,
-      //     endAt
-      //   }
-      // }
-    );
+      })
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(action => {
+            const data = action.payload.val() as ScheduleItem;
+            const $key = action.payload.key;
+            const result: ScheduleList = { $key, ...data };
+            return result;
+          })
+        )
+      );
   }
 }
